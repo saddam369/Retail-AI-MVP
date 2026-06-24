@@ -40,19 +40,7 @@ def ask(req:QuestionRequest):
         if word in upper_sql:
             return {
                 "error":"Unsafe SQL detected"
-            }
-    # rows=["Bread"]
-    # answer = generate_answer(
-    #         question,
-    #         rows
-    #     )
-
-    # return {
-    #         "question":question,
-    #         "sql":sql,
-    #         "row":rows,
-    #         "answer":answer
-    # }        
+            }        
 
     db = SessionLocal()
 

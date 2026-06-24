@@ -23,5 +23,4 @@ Generate a short business answer.
 
     response = llm.invoke(prompt)
     res = response.content
-    print(res)
     return res

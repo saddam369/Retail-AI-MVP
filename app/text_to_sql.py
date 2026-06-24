@@ -73,5 +73,4 @@ def generate_sql(question:str):
 
     response=llm.invoke(prompt)
     res=response.content
-    print(res.replace("\n", " ").replace("```sql", ""))
     return res.replace("\n", " ").replace("```sql", "")
