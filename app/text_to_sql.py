@@ -2,7 +2,17 @@ import requests
 
 from app.config import OLLAMA_URL
 from app.config import MODEL_NAME
-from langchain_ollama import ChatOllama
+from langchain_openrouter import ChatOpenRouter
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
+
+llm = ChatOpenRouter(
+    model="openai/gpt-4o-mini"
+)
 
 SCHEMA = """
 Tables:
@@ -46,8 +56,10 @@ quantity_lost,
 loss_date
 )
 
-Generate ONLY PostgreSQL SQL.
-Give me plain text SQL query only.
+Generate only the SQL query.
+Do not use markdown.
+Do not wrap the query in ```sql or ``` blocks.
+Return plain SQL text only.
 """
 
 def generate_sql(question:str):
@@ -58,11 +70,8 @@ def generate_sql(question:str):
     Question:
     {question}
     """
-    print(prompt)
-    llm = ChatOllama(
-        model="llama3.2:latest"
-    )
 
     response=llm.invoke(prompt)
     res=response.content
-    return res
+    print(res.replace("\n", " ").replace("```sql", ""))
+    return res.replace("\n", " ").replace("```sql", "")

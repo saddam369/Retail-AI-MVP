@@ -1,7 +1,13 @@
-from langchain_ollama import ChatOllama
-import requests
-from app.config import MODEL_NAME
-from app.config import OLLAMA_URL
+from langchain_openrouter import ChatOpenRouter
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
+llm = ChatOpenRouter(
+    model="openai/gpt-4o-mini"
+)
 
 def generate_answer(question,result):
 
@@ -15,7 +21,6 @@ Database Result:
 Generate a short business answer.
 """
 
-    llm=ChatOllama(model="llama3.2:latest")
     response = llm.invoke(prompt)
     res = response.content
     print(res)
